@@ -3944,3 +3944,134 @@ h1, h2, h3, h4, h5, h6 {
     .footer-bottom-flex { flex-direction: column; justify-content: center; text-align: center; gap: 1.25rem; }
     .footer-legal { justify-content: center; flex-wrap: wrap; width: 100%; }
 }
+
+/* ==========================================================================
+   BACK TO TOP BUTTON (GLOBAL)
+   ========================================================================== */
+.back-to-top-btn {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(18, 16, 19, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--gold-foil);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2400;
+    box-shadow: var(--shadow-couture), inset 0 0 0 1px var(--obsidian-border);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.85);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, color 0.35s ease;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.back-to-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Gold foil fill that rises on hover */
+.back-to-top-btn::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    transform: scale(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.btt-progress-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    pointer-events: none;
+}
+
+.btt-ring-track,
+.btt-ring-fill {
+    fill: none;
+    stroke-width: 2;
+}
+
+.btt-ring-track {
+    stroke: rgba(223, 183, 108, 0.18);
+}
+
+.btt-ring-fill {
+    stroke: var(--gold-foil);
+    stroke-linecap: round;
+    stroke-dasharray: 163.36;
+    stroke-dashoffset: 163.36;
+    transition: stroke-dashoffset 0.15s linear;
+}
+
+.btt-arrow {
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-to-top-btn:hover,
+.back-to-top-btn:focus-visible {
+    color: var(--obsidian-base);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: var(--gold-glow), 0 12px 30px rgba(0, 0, 0, 0.6);
+    outline: none;
+}
+
+.back-to-top-btn:hover::before,
+.back-to-top-btn:focus-visible::before {
+    transform: scale(1);
+}
+
+.back-to-top-btn:hover .btt-arrow,
+.back-to-top-btn:focus-visible .btt-arrow {
+    animation: bttArrowBounce 0.9s ease-in-out infinite;
+}
+
+.back-to-top-btn:active {
+    transform: translateY(-2px) scale(0.96);
+}
+
+@keyframes bttArrowBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Lift toasts above the button so they never overlap */
+.toast-container {
+    bottom: calc(2rem + 56px + 1rem);
+}
+
+@media (max-width: 768px) {
+    .back-to-top-btn {
+        right: 1.25rem;
+        bottom: 1.25rem;
+        width: 48px;
+        height: 48px;
+    }
+    .toast-container {
+        bottom: calc(1.25rem + 48px + 1rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top-btn,
+    .back-to-top-btn::before,
+    .btt-arrow { transition: none; }
+    .back-to-top-btn:hover .btt-arrow { animation: none; }
+}

@@ -1918,3 +1918,50 @@ function showToast(msg) {
         setTimeout(() => toast.remove(), 300);
     }, 3500);
 }
+
+/* ==========================================================================
+   BACK TO TOP BUTTON (GLOBAL - ALL PAGES)
+   ========================================================================== */
+(function initBackToTop() {
+    const setup = () => {
+        const btn = document.getElementById('backToTopBtn');
+        const ring = document.getElementById('backToTopRing');
+        if (!btn) return;
+
+        const CIRCUMFERENCE = 2 * Math.PI * 26; // matches r="26"
+        const SHOW_AFTER = 300;
+        let ticking = false;
+
+        const update = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
+
+            btn.classList.toggle('visible', scrollTop > SHOW_AFTER);
+            if (ring) ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - progress);
+            ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(update);
+                ticking = true;
+            }
+        }, { passive: true });
+        window.addEventListener('resize', update);
+        window.addEventListener('hashchange', () => setTimeout(update, 50));
+
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            btn.blur();
+        });
+
+        update();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setup);
+    } else {
+        setup();
+    }
+})();
