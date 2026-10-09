@@ -136,6 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 .liquid-gold-text {
     background: var(--gold-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
@@ -3753,6 +3754,62 @@ h1, h2, h3, h4, h5, h6 {
    RESPONSIVE MEDIA QUERIES
    ========================================================================== */
 
+@media (max-width: 1440px) {
+    .mobile-dropdown-wrapper {
+        display: none;
+        position: absolute;
+        top: 84px;
+        left: 0;
+        width: 100%;
+        background: #0E0C0F;
+        padding: 2rem 1.5rem;
+        border-bottom: 1px solid var(--obsidian-border);
+        box-shadow: var(--shadow-couture);
+        z-index: 1000;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    .mobile-dropdown-wrapper.mobile-active { display: flex; }
+    
+    .dna-nav-system {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+    
+    .header-actions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+    }
+
+    .dna-strand-track { display: none; }
+    .dna-nodes-chain {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: auto;
+        margin: 0 auto;
+        gap: 0.85rem;
+    }
+    .dna-connector { display: none; }
+    .dna-node {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 0.85rem;
+        width: 100%;
+        padding: 0.4rem 0;
+    }
+    .nav-container { gap: 1rem; }
+    .mobile-toggle { display: flex; }
+}
+
 @media (max-width: 1024px) {
     .page-couture-title { font-size: 2.8rem !important; line-height: 1.15 !important; }
     .hero-layout-grid { grid-template-columns: minmax(0, 1fr) !important; width: 100% !important; overflow: hidden !important; }
@@ -3807,59 +3864,6 @@ h1, h2, h3, h4, h5, h6 {
     
     .couture-pill-filters { flex-wrap: wrap !important; justify-content: center !important; }
     .couture-dropdowns-row { flex-direction: column !important; align-items: stretch !important; width: 100% !important; }
-    
-    .mobile-dropdown-wrapper {
-        display: none;
-        position: absolute;
-        top: 84px;
-        left: 0;
-        width: 100%;
-        background: #0E0C0F;
-        padding: 2rem 1.5rem;
-        border-bottom: 1px solid var(--obsidian-border);
-        box-shadow: var(--shadow-couture);
-        z-index: 1000;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
-    .mobile-dropdown-wrapper.mobile-active { display: flex; }
-    
-    .dna-nav-system {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0;
-    }
-    
-    .header-actions {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1.25rem;
-    }
-
-    .dna-strand-track { display: none; }
-    .dna-nodes-chain {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: auto;
-        margin: 0 auto;
-        gap: 0.85rem;
-    }
-    .dna-connector { display: none; }
-    .dna-node {
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 0.85rem;
-        width: 100%;
-        padding: 0.4rem 0;
-    }
-    .mobile-toggle { display: flex; }
 }
 
 @media (max-width: 768px) {
@@ -3872,6 +3876,25 @@ h1, h2, h3, h4, h5, h6 {
     .checkout-grid { grid-template-columns: 1fr; }
     .footer-layout-grid { grid-template-columns: 1fr; }
     .enrolled-card { grid-template-columns: 1fr; }
+    
+    .couture-courses-grid, 
+    .couture-products-grid,
+    .couture-stylists-grid,
+    .alchemy-lab-grid,
+    .couture-testimonials-grid,
+    .hair-profile-summary-grid { 
+        grid-template-columns: 1fr !important; 
+    }
+    
+    .couture-courses-grid > *:last-child:nth-child(odd),
+    .couture-products-grid > *:last-child:nth-child(odd),
+    .couture-stylists-grid > *:last-child:nth-child(odd),
+    .alchemy-lab-grid > *:last-child:nth-child(odd),
+    .couture-testimonials-grid > *:last-child:nth-child(odd),
+    .hair-profile-summary-grid > *:last-child:nth-child(odd) {
+        max-width: 100% !important;
+    }
+    
     .vial-details-display { padding: 1.5rem !important; }
     
     .bundle-top-flex { flex-direction: column; align-items: flex-start; gap: 1rem; }
@@ -4074,4 +4097,26 @@ h1, h2, h3, h4, h5, h6 {
     .back-to-top-btn::before,
     .btt-arrow { transition: none; }
     .back-to-top-btn:hover .btt-arrow { animation: none; }
+}
+
+/* 320px specifically */
+@media (max-width: 320px) {
+    .nav-container {
+        padding: 0 0.5rem !important;
+        gap: 0.5rem;
+    }
+    .brand-logo {
+        gap: 0.5rem;
+    }
+    .main-website-logo {
+        height: 36px;
+    }
+    .brand-monogram {
+        font-size: 1.15rem;
+        letter-spacing: 0.1em;
+    }
+    .brand-tagline-sub {
+        font-size: 0.5rem;
+        letter-spacing: 0.1em;
+    }
 }
