@@ -56,103 +56,47 @@
             <!-- 🧬 DNA CONNECTED NODES NAVBAR (●────●────●────●) -->
             <div class="mobile-dropdown-wrapper" id="mobileDropdown">
                 <nav class="dna-nav-system" id="navMenu">
-                <!-- Connected Glowing Backbone Track & Helix Wave -->
-                <div class="dna-strand-track">
-                    <div class="dna-energy-beam" id="dnaEnergyBeam"></div>
-                    <svg class="dna-helix-svg" viewBox="0 0 650 20" preserveAspectRatio="none">
-                        <path class="dna-wave-1" d="M0,10 Q32.5,0 65,10 T130,10 T195,10 T260,10 T325,10 T390,10 T455,10 T520,10 T585,10 T650,10" />
-                        <path class="dna-wave-2" d="M0,10 Q32.5,20 65,10 T130,10 T195,10 T260,10 T325,10 T390,10 T455,10 T520,10 T585,10 T650,10" />
-                    </svg>
-                </div>
-
                 <!-- Interactive Connected Nodes Chain -->
                 <div class="dna-nodes-chain">
                     <a href="#home" class="dna-node active" data-index="0" data-page="home" onclick="navigateTo('home')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">●</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">01</span>
-                            <span class="node-label">Maison</span>
+                            <span class="node-label">Home</span>
                         </div>
                     </a>
-
-                    <div class="dna-connector"></div>
 
                     <a href="#courses" class="dna-node" data-index="1" data-page="courses" onclick="navigateTo('courses')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">●</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">02</span>
-                            <span class="node-label">Académie</span>
+                            <span class="node-label">About</span>
                         </div>
                     </a>
-
-                    <div class="dna-connector"></div>
 
                     <a href="#scanner" class="dna-node" data-index="2" data-page="scanner" onclick="navigateTo('scanner')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">✦</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">BIO</span>
-                            <span class="node-label">Scanner</span>
+                            <span class="node-label">Service</span>
                         </div>
                     </a>
 
-                    <div class="dna-connector"></div>
-
                     <a href="#quiz" class="dna-node" data-index="3" data-page="quiz" onclick="navigateTo('quiz')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">●</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">03</span>
                             <span class="node-label">Bio-Quiz</span>
                         </div>
                     </a>
 
-                    <div class="dna-connector"></div>
-
                     <a href="#shop" class="dna-node" data-index="4" data-page="shop" onclick="navigateTo('shop')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">●</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">04</span>
                             <span class="node-label">Apothecary</span>
                         </div>
                     </a>
 
-                    <div class="dna-connector"></div>
-
                     <a href="#freelance" class="dna-node" data-index="5" data-page="freelance" onclick="navigateTo('freelance')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">●</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">05</span>
                             <span class="node-label">Stylists</span>
                         </div>
                     </a>
 
-                    <div class="dna-connector"></div>
-
                     <a href="#dashboard" class="dna-node node-special" data-index="6" data-page="dashboard" onclick="navigateTo('dashboard')">
-                        <div class="node-nucleus">
-                            <span class="node-glow"></span>
-                            <span class="node-core">⚜</span>
-                        </div>
                         <div class="node-meta">
-                            <span class="node-idx">ACC</span>
-                            <span class="node-label">Workspace</span>
+                            <span class="node-label">Dashboard</span>
                         </div>
                     </a>
                 </div>
@@ -160,13 +104,12 @@
 
             <!-- Header Action Utilities -->
             <div class="header-actions">
-                <div class="role-pill-switch" title="Toggle Demo Persona">
-                    <span class="role-lbl">Mode:</span>
-                    <button class="role-opt active" id="demoRoleUser" onclick="switchUserRole('student')">Student</button>
-                    <button class="role-opt" id="demoRoleAdmin" onclick="switchUserRole('admin')">Director Hub</button>
-                </div>
 
                 <div class="header-icons-group" style="display: flex; gap: 1.5rem; align-items: center;">
+                    <button class="icon-couture-btn theme-toggle" onclick="document.body.classList.toggle('bright-mode')" title="Toggle Bright Mode" aria-label="Toggle Theme">
+                        <i data-lucide="sun"></i>
+                    </button>
+
                     <button class="icon-couture-btn search-trigger" onclick="toggleGlobalSearch()" title="Search catalog" aria-label="Search">
                         <i data-lucide="search"></i>
                     </button>
@@ -1363,7 +1306,6 @@
                             <div class="couture-certificate-frame glass-card-couture mb-4" id="liveCertificateFrame">
                                 <div class="cert-gold-border">
                                     <div class="cert-inner-layout">
-                                        <div class="cert-watermark-emblem">⚜ AURA ⚜</div>
                                         <div class="cert-crest">✦ ⚜ ✦</div>
                                         <h2>CERTIFICATE OF TRICHOLOGY MASTERY</h2>
                                         <span class="cert-subtitle">THIS IS OFFICIALLY CONFERRED UPON</span>

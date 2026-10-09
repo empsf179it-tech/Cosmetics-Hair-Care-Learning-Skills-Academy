@@ -4120,3 +4120,149 @@ h1, h2, h3, h4, h5, h6 {
         letter-spacing: 0.1em;
     }
 }
+
+/* --- Bright Mode Overrides --- */
+body.bright-mode {
+    --obsidian-base: #FFFFFF;
+    --obsidian-card: #FFFFFF;
+    --obsidian-elevated: #F9F9F9;
+    --emerald-deep: #FFFFFF;
+    --emerald-card: #FFFFFF;
+    --text-primary: #111111;
+    --text-secondary: #333333;
+    --text-muted: #555555;
+    background-color: #FFFFFF;
+    color: #111111;
+}
+
+body.bright-mode section, 
+body.bright-mode .glass-card-couture, 
+body.bright-mode .obsidian-card, 
+body.bright-mode .emerald-card,
+body.bright-mode footer,
+body.bright-mode .couture-header,
+body.bright-mode .mobile-dropdown-wrapper {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #111111 !important;
+}
+
+body.bright-mode h1, body.bright-mode h2, body.bright-mode h3, 
+body.bright-mode h4, body.bright-mode h5, body.bright-mode h6,
+body.bright-mode p, body.bright-mode span, body.bright-mode a,
+body.bright-mode div, body.bright-mode li, body.bright-mode label, 
+body.bright-mode strong, body.bright-mode em, body.bright-mode i,
+body.bright-mode b, body.bright-mode .stat-val, 
+body.bright-mode .hero-title-main, body.bright-mode .section-title, 
+body.bright-mode .section-pre-title, body.bright-mode .node-label, 
+body.bright-mode .brand-monogram, body.bright-mode .brand-tagline-sub,
+body.bright-mode button:not(.btn-gold-foil):not(.role-opt):not(.btn-velvet):not(.back-to-top-btn), body.bright-mode .pill-couture {
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+body.bright-mode .italic-serif {
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+body.bright-mode input, 
+body.bright-mode textarea, 
+body.bright-mode select {
+    background: #FFFFFF !important;
+    border: 1px solid #DDDDDD !important;
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+body.bright-mode input::placeholder, 
+body.bright-mode textarea::placeholder {
+    color: #888888 !important;
+    -webkit-text-fill-color: #888888 !important;
+}
+
+body.bright-mode .cart-drawer-couture input {
+    background: #09080A !important;
+    border-color: #333333 !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+body.bright-mode .cart-drawer-couture input::placeholder {
+    color: #777777 !important;
+    -webkit-text-fill-color: #777777 !important;
+}
+
+body.bright-mode .liquid-gold-text {
+    background: var(--gold-gradient) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body.bright-mode .dna-node.active .node-label,
+body.bright-mode .dna-node.active i {
+    color: #B87515 !important;
+    -webkit-text-fill-color: #B87515 !important;
+}
+
+body.bright-mode .btn-gold-foil,
+body.bright-mode .btn-gold-foil span,
+body.bright-mode .btn-gold-foil i {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    background: var(--gold-gradient) !important;
+}
+
+body.bright-mode .haute-emblem-badge,
+body.bright-mode .haute-emblem-badge span,
+body.bright-mode .foil-badge,
+body.bright-mode .foil-badge i,
+body.bright-mode .tag-emerald,
+body.bright-mode .role-pill-switch .role-opt,
+body.bright-mode .btn-velvet,
+body.bright-mode .btn-velvet i,
+body.bright-mode .back-to-top-btn,
+body.bright-mode .back-to-top-btn svg,
+body.bright-mode .quiz-card-opt input:checked + .opt-content,
+body.bright-mode .quiz-card-opt input:checked + .opt-content *,
+body.bright-mode .prod-wish-icon,
+body.bright-mode .prod-wish-icon i,
+body.bright-mode .player-bottom-bar,
+body.bright-mode .player-bottom-bar *,
+body.bright-mode #page-dashboard .player-bottom-bar button,
+body.bright-mode .player-screen,
+body.bright-mode .player-screen *,
+body.bright-mode .couture-certificate-frame,
+body.bright-mode .couture-certificate-frame *,
+body.bright-mode #toastContainer .toast-msg,
+body.bright-mode #toastContainer .toast-msg *,
+body.bright-mode .cart-drawer-couture,
+body.bright-mode .cart-drawer-couture *,
+body.bright-mode .player-bottom-bar .tag-gold {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+body.bright-mode .tag-gold {
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+body.bright-mode .page-hero-couture .page-couture-title,
+body.bright-mode .page-hero-couture .page-couture-desc,
+body.bright-mode .page-hero-couture .section-pre-title {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+body.bright-mode .cart-drawer-couture .icon-close-btn,
+body.bright-mode .cart-drawer-couture .icon-close-btn * {
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+}
+
+body.bright-mode .auth-divider span {
+    background: #FFFFFF !important;
+}
