@@ -1356,6 +1356,13 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.5rem;
 }
 
+.vial-info-col .btn {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+}
+
 .vial-metrics-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -3845,6 +3852,13 @@ h1, h2, h3, h4, h5, h6 {
     .vial-metrics-row { grid-template-columns: 1fr; gap: 1rem; }
     .vial-details-display { padding: 1.5rem !important; }
     
+    .vial-info-col .btn {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important;
+        width: fit-content !important;
+    }
+
     .btn { white-space: normal !important; height: auto !important; text-align: center !important; }
     .hero-prestige-strip { flex-wrap: wrap !important; justify-content: center !important; gap: 1rem !important; }
     
