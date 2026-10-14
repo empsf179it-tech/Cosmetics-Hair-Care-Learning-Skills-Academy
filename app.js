@@ -427,26 +427,30 @@ const adminQuizLeads = [
 ];
 
 /* ==========================================================================
-   INITIALIZATION
-   ========================================================================== */
-
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
     initApp();
-});
+}
 
 function initApp() {
-    renderHomeCourses();
-    renderHomeProducts();
-    renderAllCourses();
-    renderAllProducts();
-    renderStylists();
-    renderDashboard();
-    renderAdminViews();
-    initSplitSlider();
-    initCuticleScanner();
-    initDnaNavbar();
-    updateCartUI();
-    updateWishlistCount();
+    try {
+        renderHomeCourses();
+        renderHomeProducts();
+        renderAllCourses();
+        renderAllProducts();
+        renderStylists();
+        renderDashboard();
+        renderAdminViews();
+        initSplitSlider();
+        initCuticleScanner();
+        initDnaNavbar();
+        initTheme();
+        updateCartUI();
+        updateWishlistCount();
+    } catch (err) {
+        console.warn('InitApp warning:', err);
+    }
     
     // Auto-close mobile menu when clicking any navlink or button
     const mobileDropdown = document.getElementById('mobileDropdown');
@@ -461,6 +465,54 @@ function initApp() {
     window.addEventListener('hashchange', handleRoute);
     handleRoute();
 
+    renderAllLucideIcons();
+}
+
+function renderAllLucideIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+    } else {
+        // Fallback polling if CDN is resolving on slower refresh
+        let attempts = 0;
+        const interval = setInterval(() => {
+            attempts++;
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+                clearInterval(interval);
+            } else if (attempts >= 20) {
+                clearInterval(interval);
+            }
+        }, 80);
+    }
+}
+
+/* ==========================================================================
+   THEME PERSISTENCE ENGINE (LIGHT / DARK MODE)
+   ========================================================================== */
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('aura_theme');
+    if (savedTheme === 'bright') {
+        document.body.classList.add('bright-mode');
+    } else {
+        document.body.classList.remove('bright-mode');
+    }
+    updateThemeToggleIcons();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('bright-mode');
+    const isBright = document.body.classList.contains('bright-mode');
+    localStorage.setItem('aura_theme', isBright ? 'bright' : 'dark');
+    updateThemeToggleIcons();
+}
+
+function updateThemeToggleIcons() {
+    const isBright = document.body.classList.contains('bright-mode');
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+        btn.setAttribute('title', isBright ? 'Toggle Dark Mode' : 'Toggle Bright Mode');
+        btn.innerHTML = isBright ? '<i data-lucide="moon"></i>' : '<i data-lucide="sun"></i>';
+    });
     if (window.lucide) {
         window.lucide.createIcons();
     }
@@ -485,6 +537,17 @@ function navigateTo(pageId, updateHash = true) {
     document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active'));
     const targetPage = document.getElementById(`page-${pageId}`);
     if (targetPage) targetPage.classList.add('active');
+
+    // Page-specific body classes & footer control (hide footer on dashboard page alone)
+    document.body.classList.toggle('page-is-dashboard', pageId === 'dashboard');
+    const mainFooter = document.getElementById('mainFooter');
+    if (mainFooter) {
+        if (pageId === 'dashboard') {
+            mainFooter.style.display = 'none';
+        } else {
+            mainFooter.style.display = '';
+        }
+    }
 
     // Update active state in DNA Connected Nodes
     document.querySelectorAll('.dna-node').forEach(node => {
@@ -1520,12 +1583,43 @@ function switchDashboardRole(role) {
     else switchDashTab('tab-admin-analytics', document.querySelector('[data-tab="tab-admin-analytics"]'));
 }
 
+function toggleDashboardSidebar(forceState) {
+    const sidebar = document.getElementById('dashSidebar');
+    const backdrop = document.getElementById('dashSidebarBackdrop');
+    const toggleBtn = document.getElementById('dashMenuToggleBtn');
+    if (!sidebar) return;
+
+    const isOpen = typeof forceState === 'boolean' ? forceState : !sidebar.classList.contains('mobile-open');
+
+    if (isOpen) {
+        sidebar.classList.add('mobile-open');
+        backdrop?.classList.add('active');
+        toggleBtn?.classList.add('active');
+        document.body.classList.add('dash-menu-locked');
+    } else {
+        sidebar.classList.remove('mobile-open');
+        backdrop?.classList.remove('active');
+        toggleBtn?.classList.remove('active');
+        document.body.classList.remove('dash-menu-locked');
+    }
+}
+
 function switchDashTab(tabId, btn) {
     document.querySelectorAll('.dash-tab-pane').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.dash-btn').forEach(b => b.classList.remove('active'));
 
     document.getElementById(tabId)?.classList.add('active');
-    if (btn) btn.classList.add('active');
+    if (btn) {
+        btn.classList.add('active');
+        const tabTitle = btn.textContent.trim();
+        const titleEl = document.getElementById('dashCurrentTabTitle');
+        if (titleEl && tabTitle) titleEl.textContent = tabTitle;
+    }
+
+    // Auto-close hamburger menu on mobile/tab view after picking a tab
+    if (window.innerWidth <= 1024) {
+        toggleDashboardSidebar(false);
+    }
 
     if (window.lucide) window.lucide.createIcons();
 }
