@@ -427,6 +427,8 @@ const adminQuizLeads = [
 ];
 
 /* ==========================================================================
+   INITIALIZATION & EVENT LISTENERS
+   ========================================================================== */
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {
@@ -452,15 +454,27 @@ function initApp() {
         console.warn('InitApp warning:', err);
     }
     
-    // Auto-close mobile menu when clicking any navlink or button
+    // Auto-close mobile hamburger menu when clicking any navlink, icon, or button inside it
     const mobileDropdown = document.getElementById('mobileDropdown');
     if (mobileDropdown) {
         mobileDropdown.addEventListener('click', (e) => {
-            if (e.target.closest('a') || e.target.closest('button')) {
-                mobileDropdown.classList.remove('mobile-active');
+            const clickable = e.target.closest('a, button, .dna-node, .icon-couture-btn, .btn, .avatar-couture-chip');
+            if (clickable) {
+                closeMobileMenu();
             }
         });
     }
+
+    // Auto-close mobile hamburger menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('mobileDropdown');
+        const toggleBtn = document.getElementById('mobileToggle');
+        if (dropdown && dropdown.classList.contains('mobile-active')) {
+            if (!dropdown.contains(e.target) && !toggleBtn?.contains(e.target)) {
+                closeMobileMenu();
+            }
+        }
+    });
 
     window.addEventListener('hashchange', handleRoute);
     handleRoute();
@@ -501,6 +515,7 @@ function initTheme() {
 }
 
 function toggleTheme() {
+    closeMobileMenu();
     document.body.classList.toggle('bright-mode');
     const isBright = document.body.classList.contains('bright-mode');
     localStorage.setItem('aura_theme', isBright ? 'bright' : 'dark');
@@ -523,15 +538,20 @@ function updateThemeToggleIcons() {
    ========================================================================== */
 
 function handleRoute() {
-    const hash = window.location.hash.replace('#', '') || 'home';
+    const rawHash = window.location.hash.replace('#', '').trim();
+    const hash = rawHash || 'home';
     const validPages = ['home', 'courses', 'scanner', 'quiz', 'shop', 'details', 'freelance', 'dashboard'];
     
     if (validPages.includes(hash)) {
-        navigateTo(hash, false);
+        if (state.currentPage !== hash) {
+            navigateTo(hash, false);
+        }
     }
 }
 
 function navigateTo(pageId, updateHash = true) {
+    if (!pageId) return;
+    closeMobileMenu();
     state.currentPage = pageId;
     
     document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active'));
@@ -551,10 +571,9 @@ function navigateTo(pageId, updateHash = true) {
 
     // Update active state in DNA Connected Nodes
     document.querySelectorAll('.dna-node').forEach(node => {
-        node.classList.remove('active');
-        if (node.dataset.page === pageId) {
-            node.classList.add('active');
-
+        const isActive = node.dataset.page === pageId;
+        node.classList.toggle('active', isActive);
+        if (isActive) {
             const energyBeam = document.getElementById('dnaEnergyBeam');
             if (window.gsap && energyBeam) {
                 const targetLeft = node.offsetLeft + (node.offsetWidth / 2) - 30;
@@ -568,7 +587,9 @@ function navigateTo(pageId, updateHash = true) {
         }
     });
 
-    if (updateHash) window.location.hash = pageId;
+    if (updateHash && window.location.hash !== `#${pageId}`) {
+        window.location.hash = pageId;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (pageId === 'scanner') {
@@ -674,8 +695,19 @@ function initDnaNavbar() {
     });
 }
 
-function toggleMobileMenu() {
-    document.getElementById('mobileDropdown')?.classList.toggle('mobile-active');
+function toggleMobileMenu(forceState) {
+    const dropdown = document.getElementById('mobileDropdown');
+    if (!dropdown) return;
+    if (typeof forceState === 'boolean') {
+        dropdown.classList.toggle('mobile-active', forceState);
+    } else {
+        dropdown.classList.toggle('mobile-active');
+    }
+}
+
+function closeMobileMenu() {
+    const dropdown = document.getElementById('mobileDropdown');
+    if (dropdown) dropdown.classList.remove('mobile-active');
 }
 
 /* ==========================================================================
@@ -692,6 +724,7 @@ function initSplitSlider() {
 
     const updateSliderPos = (clientX) => {
         const rect = slider.getBoundingClientRect();
+        if (rect.width <= 0) return;
         let offsetX = clientX - rect.left;
         if (offsetX < 0) offsetX = 0;
         if (offsetX > rect.width) offsetX = rect.width;
@@ -701,34 +734,43 @@ function initSplitSlider() {
         handle.style.left = `${pct}%`;
     };
 
-    slider.addEventListener('mousedown', (e) => {
+    // Universal Pointer Events (handles touch, pen, mouse reliably)
+    slider.addEventListener('pointerdown', (e) => {
         isDragging = true;
+        slider.setPointerCapture?.(e.pointerId);
         updateSliderPos(e.clientX);
     });
 
-    window.addEventListener('mousemove', (e) => {
+    slider.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
         updateSliderPos(e.clientX);
     });
 
-    window.addEventListener('mouseup', () => {
+    const stopDragging = (e) => {
+        if (!isDragging) return;
         isDragging = false;
-    });
+        try { slider.releasePointerCapture?.(e.pointerId); } catch (_) {}
+    };
 
-    // Touch support for mobile
+    slider.addEventListener('pointerup', stopDragging);
+    slider.addEventListener('pointercancel', stopDragging);
+    window.addEventListener('pointerup', stopDragging);
+
+    // Fallback touch handlers
     slider.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        updateSliderPos(e.touches[0].clientX);
-    });
+        if (e.touches && e.touches.length > 0) {
+            isDragging = true;
+            updateSliderPos(e.touches[0].clientX);
+        }
+    }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
+        if (!isDragging || !e.touches || e.touches.length === 0) return;
         updateSliderPos(e.touches[0].clientX);
-    });
+    }, { passive: true });
 
-    window.addEventListener('touchend', () => {
-        isDragging = false;
-    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+    window.addEventListener('touchcancel', () => { isDragging = false; });
 }
 
 /* ==========================================================================
@@ -1337,6 +1379,7 @@ function filterStylistSpecialty(spec, btn) {
    ========================================================================== */
 
 function toggleCartDrawer() {
+    closeMobileMenu();
     document.getElementById('cartBackdrop')?.classList.toggle('active');
     document.getElementById('cartDrawer')?.classList.toggle('active');
 }
@@ -1463,6 +1506,7 @@ function updateWishlistCount() {
 }
 
 function openWishlistModal() {
+    closeMobileMenu();
     navigateTo('dashboard');
     switchDashTab('tab-wishlist', document.querySelector('[data-tab="tab-wishlist"]'));
 }
@@ -1869,6 +1913,7 @@ function submitNewProduct(e) {
    ========================================================================== */
 
 function openAuthModal(mode = 'login') {
+    closeMobileMenu();
     document.getElementById('authModal')?.classList.add('active');
     switchAuthMode(mode);
 }
@@ -1954,6 +1999,7 @@ function submitReviewForm(e) {
    ========================================================================== */
 
 function toggleGlobalSearch() {
+    closeMobileMenu();
     const el = document.getElementById('searchOverlay');
     el.classList.toggle('active');
     if (el.classList.contains('active')) document.getElementById('globalSearchInput')?.focus();

@@ -64,43 +64,43 @@
                 <nav class="dna-nav-system" id="navMenu">
                 <!-- Interactive Connected Nodes Chain -->
                 <div class="dna-nodes-chain">
-                    <a href="#home" class="dna-node active" data-index="0" data-page="home" onclick="navigateTo('home')">
+                    <a href="#home" class="dna-node active" data-index="0" data-page="home" onclick="event.preventDefault(); navigateTo('home')">
                         <div class="node-meta">
                             <span class="node-label">Home</span>
                         </div>
                     </a>
 
-                    <a href="#courses" class="dna-node" data-index="1" data-page="courses" onclick="navigateTo('courses')">
+                    <a href="#courses" class="dna-node" data-index="1" data-page="courses" onclick="event.preventDefault(); navigateTo('courses')">
                         <div class="node-meta">
                             <span class="node-label">About</span>
                         </div>
                     </a>
 
-                    <a href="#scanner" class="dna-node" data-index="2" data-page="scanner" onclick="navigateTo('scanner')">
+                    <a href="#scanner" class="dna-node" data-index="2" data-page="scanner" onclick="event.preventDefault(); navigateTo('scanner')">
                         <div class="node-meta">
                             <span class="node-label">Service</span>
                         </div>
                     </a>
 
-                    <a href="#quiz" class="dna-node" data-index="3" data-page="quiz" onclick="navigateTo('quiz')">
+                    <a href="#quiz" class="dna-node" data-index="3" data-page="quiz" onclick="event.preventDefault(); navigateTo('quiz')">
                         <div class="node-meta">
                             <span class="node-label">Bio-Quiz</span>
                         </div>
                     </a>
 
-                    <a href="#shop" class="dna-node" data-index="4" data-page="shop" onclick="navigateTo('shop')">
+                    <a href="#shop" class="dna-node" data-index="4" data-page="shop" onclick="event.preventDefault(); navigateTo('shop')">
                         <div class="node-meta">
                             <span class="node-label">Apothecary</span>
                         </div>
                     </a>
 
-                    <a href="#freelance" class="dna-node" data-index="5" data-page="freelance" onclick="navigateTo('freelance')">
+                    <a href="#freelance" class="dna-node" data-index="5" data-page="freelance" onclick="event.preventDefault(); navigateTo('freelance')">
                         <div class="node-meta">
                             <span class="node-label">Stylists</span>
                         </div>
                     </a>
 
-                    <a href="#dashboard" class="dna-node node-special" data-index="6" data-page="dashboard" onclick="navigateTo('dashboard')">
+                    <a href="#dashboard" class="dna-node node-special" data-index="6" data-page="dashboard" onclick="event.preventDefault(); navigateTo('dashboard')">
                         <div class="node-meta">
                             <span class="node-label">Dashboard</span>
                         </div>
@@ -275,7 +275,7 @@
             </div>
 
             <!-- Signature Feature: Interactive Cuticle Scanner Banner Callout -->
-            <div class="container section-pad-sm">
+            <div class="container section-pad-sm scanner-teaser-section">
                 <div class="scanner-teaser-banner glass-card-couture" onclick="navigateTo('scanner')">
                     <div class="teaser-icon-glow"><i data-lucide="scan"></i></div>
                     <div class="teaser-text">
