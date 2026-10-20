@@ -298,13 +298,13 @@
 
                     <div class="interactive-split-slider-wrapper glass-card-couture">
                         <div class="split-slider-container" id="beforeAfterSlider">
-                            <div class="split-image-before">
+                            <div class="split-image-before" id="splitBeforeImage">
                                 <img src="images/image-9.png" alt="Damaged Cuticle Before Routine">
-                                <span class="split-badge before-badge">Before: High Porosity & Heat Breakage</span>
+                                <span class="split-badge before-badge" id="splitBeforeBadge">Before: High Porosity & Heat Breakage</span>
                             </div>
                             <div class="split-image-after" id="splitAfterImage">
                                 <img src="images/image-10.png" alt="Restored Hair After Routine">
-                                <span class="split-badge after-badge">Week 8: Fortified Bio-Peptide Matrix</span>
+                                <span class="split-badge after-badge" id="splitAfterBadge">Week 8: Fortified Bio-Peptide Matrix</span>
                             </div>
                             <div class="split-handle" id="splitHandle">
                                 <div class="handle-line"></div>
@@ -1848,7 +1848,12 @@
                         <label>Password</label>
                         <a href="javascript:void(0)" class="forgot-link" onclick="switchAuthMode('forgot')">Forgot Password</a>
                     </div>
-                    <input type="password" id="loginPass" value="password123" required>
+                    <div class="password-input-wrap">
+                        <input type="password" id="loginPass" value="password123" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('loginPass', this)" aria-label="Toggle password visibility">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-gold-foil btn-block btn-lg mt-3">Access Académie</button>
                 
@@ -1896,7 +1901,12 @@
                 </div>
                 <div class="form-group">
                     <label>Create Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" required>
+                    <div class="password-input-wrap">
+                        <input type="password" id="regPass" placeholder="••••••••" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('regPass', this)" aria-label="Toggle password visibility">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="auth-terms-row">
                     <label class="check-couture auth-terms-label">

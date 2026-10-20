@@ -1234,12 +1234,24 @@ h1, h2, h3, h4, h5, h6 {
     touch-action: none;
 }
 
-.split-image-before, .split-image-after {
+.split-image-before {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    z-index: 1;
+}
+
+.split-image-after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    transition: clip-path 0.05s ease-out;
 }
 
 .split-image-before img, .split-image-after img {
@@ -1253,11 +1265,6 @@ h1, h2, h3, h4, h5, h6 {
     user-select: none;
 }
 
-.split-image-after {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-    transition: clip-path 0.05s ease-out;
-}
-
 .split-badge {
     position: absolute;
     padding: 0.45rem 1rem;
@@ -1269,16 +1276,19 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-backdrop-filter: blur(12px);
     z-index: 5;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.65);
-    max-width: calc(100% - 2.5rem);
+    max-width: 44%;
     box-sizing: border-box;
-    text-align: center;
     pointer-events: none;
+    transition: opacity 0.25s ease;
 }
 
 .before-badge {
     top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 1rem;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    text-align: left;
     background: rgba(0, 0, 0, 0.92);
     border: 1.5px solid rgba(255, 255, 255, 0.5);
     color: #FFFFFF;
@@ -1287,8 +1297,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .after-badge {
     bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 1rem;
+    left: auto;
+    top: auto;
+    transform: none;
+    text-align: right;
     background: var(--gold-gradient);
     border: 1.5px solid #FFFFFF;
     color: #09080A;
@@ -1305,6 +1318,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 0 15px rgba(223, 183, 108, 0.8);
     transform: translateX(-50%);
     pointer-events: none;
+    z-index: 20;
 }
 
 .handle-circle {
@@ -3483,6 +3497,54 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 0 0 3px rgba(223, 183, 108, 0.2);
 }
 
+/* Password Input with Eye Icon */
+.password-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrap input {
+    width: 100%;
+    padding-right: 2.75rem !important;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+    z-index: 5;
+    width: 24px;
+    height: 24px;
+    outline: none;
+}
+
+.password-toggle-btn:hover {
+    color: var(--gold-foil);
+}
+
+.password-toggle-btn svg,
+.password-toggle-btn i {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    pointer-events: none;
+    display: block;
+}
+
 /* ==========================================================================
    CART DRAWER & CHECKOUT
    ========================================================================== */
@@ -4484,27 +4546,33 @@ body:has(#page-dashboard.active) .couture-footer {
     }
     .split-badge {
         font-size: 0.68rem !important;
-        padding: 0.35rem 0.75rem !important;
-        max-width: calc(100% - 1.5rem) !important;
+        padding: 0.35rem 0.65rem !important;
+        max-width: 44% !important;
         white-space: normal !important;
-        text-align: center !important;
-        line-height: 1.2 !important;
+        line-height: 1.25 !important;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.85) !important;
         box-sizing: border-box !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        right: auto !important;
+        z-index: 5 !important;
+        transition: opacity 0.25s ease !important;
     }
     .before-badge {
         top: 0.75rem !important;
+        left: 0.75rem !important;
+        right: auto !important;
         bottom: auto !important;
+        transform: none !important;
+        text-align: left !important;
         background: rgba(0, 0, 0, 0.95) !important;
         border: 1.5px solid #FFFFFF !important;
         color: #FFFFFF !important;
     }
     .after-badge {
         bottom: 0.75rem !important;
+        right: 0.75rem !important;
+        left: auto !important;
         top: auto !important;
+        transform: none !important;
+        text-align: right !important;
         background: var(--gold-gradient) !important;
         border: 1.5px solid #FFFFFF !important;
         color: #09080A !important;
@@ -4513,6 +4581,7 @@ body:has(#page-dashboard.active) .couture-footer {
     .vial-detail-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .couture-dash-layout { grid-template-columns: 1fr; }
     .admin-charts-grid { grid-template-columns: 1fr; }
+    .admin-metrics-grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
     
     /* Workspace Mobile Alignment */
     .couture-dash-panel {
@@ -4972,6 +5041,22 @@ body:has(#page-dashboard.active) .couture-footer {
         height: 38px !important;
     }
 
+    #authModal .password-input-wrap input {
+        padding-right: 2.35rem !important;
+    }
+
+    #authModal .password-toggle-btn {
+        right: 0.65rem !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    #authModal .password-toggle-btn svg,
+    #authModal .password-toggle-btn i {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
     #authModal .forgot-link {
         font-size: 0.75rem !important;
     }
@@ -5296,6 +5381,19 @@ body.bright-mode .forgot-link:hover,
 body.bright-mode .terms-link:hover {
     color: #5A4315 !important;
     -webkit-text-fill-color: #5A4315 !important;
+}
+
+body.bright-mode .password-toggle-btn {
+    color: #666666 !important;
+}
+
+body.bright-mode .password-toggle-btn:hover {
+    color: #9E782F !important;
+}
+
+body.bright-mode .password-toggle-btn svg,
+body.bright-mode .password-toggle-btn i {
+    stroke: currentColor !important;
 }
 
 /* Header & Navbar Icons in Bright Mode */

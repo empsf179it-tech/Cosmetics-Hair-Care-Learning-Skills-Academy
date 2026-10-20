@@ -732,6 +732,16 @@ function initSplitSlider() {
         const pct = (offsetX / rect.width) * 100;
         afterImg.style.clipPath = `polygon(${pct}% 0, 100% 0, 100% 100%, ${pct}% 100%)`;
         handle.style.left = `${pct}%`;
+
+        // Smoothly hide tags when scrolled left or right so they stay inside and never sit above the arrow
+        const beforeBadge = document.getElementById('splitBeforeBadge') || slider.querySelector('.before-badge');
+        const afterBadge = document.getElementById('splitAfterBadge') || slider.querySelector('.after-badge');
+        if (beforeBadge) {
+            beforeBadge.style.opacity = pct < 20 ? '0' : '1';
+        }
+        if (afterBadge) {
+            afterBadge.style.opacity = pct > 80 ? '0' : '1';
+        }
     };
 
     // Universal Pointer Events (handles touch, pen, mouse reliably)
@@ -1916,6 +1926,21 @@ function openAuthModal(mode = 'login') {
     closeMobileMenu();
     document.getElementById('authModal')?.classList.add('active');
     switchAuthMode(mode);
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+    }
+}
+
+function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    btn.innerHTML = `<i data-lucide="${isPassword ? 'eye-off' : 'eye'}"></i>`;
+    btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+    }
 }
 
 function closeAuthModal(e) {
