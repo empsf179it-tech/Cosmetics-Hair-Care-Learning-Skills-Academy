@@ -4642,6 +4642,22 @@ body:has(#page-dashboard.active) .couture-footer {
     .pane-header-couture { flex-direction: column !important; text-align: center !important; }
     .pane-header-couture .btn { width: 100% !important; }
     
+    /* Platform Settings Mobile Alignment: Textboxes stacked one-by-one */
+    #tab-admin-settings .settings-form {
+        padding: 1.5rem 1.25rem !important;
+    }
+    #tab-admin-settings .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+    }
+    #tab-admin-settings .form-grid .form-group {
+        width: 100% !important;
+    }
+    #tab-admin-settings .form-grid .form-group input {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
     /* Live Certificate Card Mobile Center & Responsiveness */
     .couture-dash-body {
         width: 100% !important;
